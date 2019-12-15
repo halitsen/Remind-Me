@@ -1,19 +1,16 @@
-package halit.sen.remindme
+package halit.sen.remindme.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import halit.sen.remindme.database.ReminderDao
+import halit.sen.remindme.R
 import halit.sen.remindme.database.ReminderData
 import halit.sen.remindme.database.ReminderDatabase
 import halit.sen.remindme.databinding.ActivityMainBinding
-import halit.sen.remindme.main.MainViewModel
-import halit.sen.remindme.main.MainViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 

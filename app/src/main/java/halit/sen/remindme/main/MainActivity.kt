@@ -23,20 +23,17 @@ class MainActivity : AppCompatActivity(),RecyclerViewClickListener {
     var reminder: ReminderData = ReminderData()
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-       // binding.text.text = getString(R.string.app_name)
-
         val application = requireNotNull(this).application
         val dataSource = ReminderDatabase.getInstance(application).reminderDao
         val viewModelFactory = MainViewModelFactory(dataSource, application)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
-        binding.setLifecycleOwner (this)
+
+        binding.setLifecycleOwner(this)
         binding.reminderList.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-
 
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)

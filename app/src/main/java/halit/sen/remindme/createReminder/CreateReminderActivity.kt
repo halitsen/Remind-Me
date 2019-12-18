@@ -20,12 +20,10 @@ class CreateReminderActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_create_reminder)
-
         val bundle: Bundle? = intent.extras
         if (bundle != null) {
             reminder = bundle.getSerializable("reminder") as ReminderData
         }
-
         if(reminder.reminderId != 0L){
             //todo note it te description yok ise ekle den gelmiş var ise update den gelmiş. burada da id 0 mı değil mi ye göre gidecez..
             Toast.makeText(this,"Reminder Id from update: "+reminder.reminderId, Toast.LENGTH_SHORT).show()
@@ -37,7 +35,8 @@ class CreateReminderActivity : AppCompatActivity() {
         val datasource = ReminderDatabase.getInstance(application).reminderDao
         val viewModelFactory = CreateReminderViewModelFactory(reminder, datasource, application)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(CreateReminderViewModel::class.java)
-
-
+        binding.setLifecycleOwner(this)
+        binding.createReminderViewModel = viewModel
+        // edit note dan gelince uı i databinding ile set et. Boş ise boş set edilecek zaten. Add ile edit arasındaki farkı ayır..
     }
 }

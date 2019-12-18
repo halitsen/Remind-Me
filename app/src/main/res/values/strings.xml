@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Remind Me</string>
+    <string name="reminder_placeholder_text">I have homework to do</string>
+    <string name="reminder_date">01.02.2020 15:00</string>
 </resources>

@@ -11,4 +11,18 @@ class CreateReminderViewModel(val reminder: ReminderData, val database: Reminder
 
 
 
+    fun insertReminder(reminder: ReminderData){
+        database.insert(reminder)
+        //todo bu işlemleri uiScope ta yap..
+    }
+
+    fun deleteDeminder(reminder: ReminderData){
+        database.deleteReminder(reminder)
+    }
+
+    fun updateReminder(reminder: ReminderData){
+        database.update(reminder)
+    }
+
+
 }

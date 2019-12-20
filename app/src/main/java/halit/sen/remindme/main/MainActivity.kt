@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -42,19 +43,17 @@ class MainActivity : AppCompatActivity(),RecyclerViewClickListener {
         binding.reminderList.adapter = adapter
 
         binding.fab.setOnClickListener {
-            viewModel.insertReminder(reminder)
             viewModel.openCreateReminderAcivity(this,reminder)
         }
 
         viewModel.allReminders.observe(this, Observer {
             it?.let {
                 adapter.data = it
-              //  binding.emptyNotePaceholderText.visibility = View.GONE
+                binding.emptyReminderPaceholderText.visibility = View.GONE
             }
-            /*
             if(it.size < 1){
-                binding.emptyNotePaceholderText.visibility = View.VISIBLE
-            } *///todo placeholder icon ve text koy
+                binding.emptyReminderPaceholderText.visibility = View.VISIBLE
+            }
         })
     }
 
@@ -79,7 +78,6 @@ class MainActivity : AppCompatActivity(),RecyclerViewClickListener {
     }
 
     override fun onEditItem(item: ReminderData) {
-        //open create reminder
         viewModel.openCreateReminderAcivity(this,item)
     }
 }

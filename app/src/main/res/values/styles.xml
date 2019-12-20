@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/blue</item>
         <item name="colorPrimaryDark">@color/darkBlue</item>
-        <item name="colorAccent">@color/lightBlue</item>
+        <item name="colorAccent">@color/blue</item>
         <item name="actionOverflowButtonStyle">@style/MyOverflowIconStyle</item>
     </style>
 

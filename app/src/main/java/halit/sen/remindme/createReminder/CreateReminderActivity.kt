@@ -2,6 +2,8 @@ package halit.sen.remindme.createReminder
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -37,6 +39,16 @@ class CreateReminderActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(CreateReminderViewModel::class.java)
         binding.setLifecycleOwner(this)
         binding.createReminderViewModel = viewModel
+        setSupportActionBar(binding.toolbar)
+        supportActionBar!!.setDisplayShowTitleEnabled(false)
         // edit note dan gelince uı i databinding ile set et. Boş ise boş set edilecek zaten. Add ile edit arasındaki farkı ayır..
+
+        binding.backIcon.setOnClickListener {
+            finish()
+        }
+        binding.createReminderText.setOnClickListener {
+            //todo update den gelmişse update olacak
+            viewModel.insertReminder(reminder)
+        }
     }
 }

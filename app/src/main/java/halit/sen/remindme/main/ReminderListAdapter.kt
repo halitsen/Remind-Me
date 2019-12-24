@@ -1,5 +1,6 @@
 package halit.sen.remindme.main
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.provider.ContactsContract
 import android.view.LayoutInflater
@@ -55,11 +56,12 @@ class ReminderListAdapter(mainActivity: MainActivity) : RecyclerView.Adapter<Rem
         val isActiveIcon: ImageView = itemView.findViewById(R.id.reminder_is_active_icon)
         val isBirthdayImage : ImageView = itemView.findViewById(R.id.is_birthday_image)
         val garbageIcon : ImageView = itemView.findViewById(R.id.garbage_icon)
+        @SuppressLint("SetTextI18n")
         fun bind(item: ReminderData, main:MainActivity) {
 
             title.text = item.reminderTitle
             description.text = item.reminderContent
-            date.text = getTimeFromMilis(item.notifyTime)
+            date.text = item.notifyTimeAsDay + res.getString(R.string.space) + item.notifyTimeAsHour
             if(item.isBirthday){
                 isBirthdayImage.setImageResource(R.drawable.ic_birthday_cake)
             }

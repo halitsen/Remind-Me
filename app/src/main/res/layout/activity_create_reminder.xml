@@ -61,7 +61,7 @@
                     android:paddingLeft="30dp">
 
                     <EditText
-                        android:id="@+id/note_description"
+                        android:id="@+id/reminder_description"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="1dp"
@@ -70,6 +70,7 @@
                         android:textCursorDrawable="@drawable/cursor_color"
                         android:hint="Remind Me: "
                         android:maxLines="3"
+                        android:text="@{createReminderViewModel.content}"
                         android:textSize="17sp"
                         app:fontFamily="sans-serif"
                         android:textColorHint="@color/hintColor"
@@ -78,7 +79,6 @@
                         android:paddingRight="12dp"
                         android:paddingLeft="12dp"
                         android:paddingBottom="12dp">
-                        <!--todo buradaki bilgileri viewmodel den al...-->
                     </EditText>
 
                 </RelativeLayout>
@@ -106,7 +106,7 @@
                         android:id="@+id/date_day_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Reminder Date:"
+                        android:text="@{createReminderViewModel.reminderTimeAsDay}"
                         android:layout_centerVertical="true"
                         android:textSize="17sp"
                         android:layout_alignParentLeft="true"
@@ -148,7 +148,7 @@
                         android:id="@+id/date_time_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Reminder Time:"
+                        android:text="@{createReminderViewModel.reminderTimeAsHour}"
                         android:layout_centerVertical="true"
                         android:textSize="17sp"
                         android:layout_alignParentLeft="true"

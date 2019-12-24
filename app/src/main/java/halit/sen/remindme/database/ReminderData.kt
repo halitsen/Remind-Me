@@ -31,7 +31,7 @@ class ReminderData : Serializable{
     var notifyTimeAsHour:String = ""
 
     @ColumnInfo(name = "notify_time_milis")
-    var notifyTimeMilis:Long = System.currentTimeMillis() + 86400000;// add 1 day from notify created time
+    var notifyTimeMilis:Long = 0
 
     @ColumnInfo(name = "is_active")
     var isActive: Boolean = false

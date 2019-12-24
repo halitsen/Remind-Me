@@ -91,7 +91,6 @@
                     android:background="@color/darkBlue">
                 </View>
 
-
                 <RelativeLayout
                     android:id="@+id/date_day_layout"
                     android:layout_width="match_parent"
@@ -109,6 +108,8 @@
                         android:text="@{createReminderViewModel.reminderTimeAsDay}"
                         android:layout_centerVertical="true"
                         android:textSize="17sp"
+                        android:hint="Reminder Date :"
+                        android:textColorHint="@color/blue"
                         android:layout_alignParentLeft="true"
                         android:textColor="@color/blue"
                         app:fontFamily="sans-serif"/>
@@ -151,6 +152,8 @@
                         android:text="@{createReminderViewModel.reminderTimeAsHour}"
                         android:layout_centerVertical="true"
                         android:textSize="17sp"
+                        android:textColorHint="@color/blue"
+                        android:hint="Reminder Hour :"
                         android:layout_alignParentLeft="true"
                         android:textColor="@color/blue"
                         app:fontFamily="sans-serif"/>

@@ -14,6 +14,7 @@ import java.util.*
 import android.app.TimePickerDialog
 import android.util.Log
 import halit.sen.remindme.R
+import halit.sen.remindme.openInfoDialog
 import halit.sen.remindme.restart
 import kotlinx.android.synthetic.main.activity_create_reminder.view.*
 import kotlin.time.ExperimentalTime
@@ -30,27 +31,13 @@ class CreateReminderActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(
-            this,
-            halit.sen.remindme.R.layout.activity_create_reminder
-        )
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_create_reminder)
         val bundle: Bundle? = intent.extras
         if (bundle != null) {
             reminder = bundle.getSerializable("reminder") as ReminderData
             binding.createReminderText.text = "Update Reminder"
         }
-        if (reminder.reminderId != 0L) {
-            //todo note it te description yok ise ekle den gelmiş var ise update den gelmiş. burada da id 0 mı değil mi ye göre gidecez..
-            Toast.makeText(
-                this,
-                "Reminder Id from update: " + reminder.reminderId,
-                Toast.LENGTH_SHORT
-            ).show()
-        } else {
-            Toast.makeText(this, "Reminder Id from add: " + reminder.reminderId, Toast.LENGTH_SHORT)
-                .show()
-        }
-
+        binding.isBirthdaySwitch.isChecked = reminder.isBirthday
         val application = requireNotNull(this).application
         val datasource = ReminderDatabase.getInstance(application).reminderDao
         val viewModelFactory = CreateReminderViewModelFactory(reminder, datasource, application)
@@ -68,21 +55,40 @@ class CreateReminderActivity : AppCompatActivity() {
                     Calendar.DAY_OF_MONTH, dayOfMonth
                 )
                 val df = SimpleDateFormat("EEE, d MMM yyyy", Locale.getDefault())
-                viewModel.setDayText(df.format(cal.time), cal.timeInMillis)
-                Log.i("Milisecond : ",cal.timeInMillis.toString())
+               val  cl = Calendar.getInstance()
+
+                val hour = cl.get(Calendar.HOUR_OF_DAY)
+                val minute = cl.get(Calendar.MINUTE)
+
+                val mil = (hour*60000*60) + (minute*60000)
+
+
+                viewModel.setDayText(df.format(cal.time), cal.timeInMillis.minus(mil))
+                Log.i("Milisecond : ", cal.timeInMillis.toString())
             }
         // edit note dan gelince uı i databinding ile set et. Boş ise boş set edilecek zaten. Add ile edit arasındaki farkı ayır..
-
         binding.backIcon.setOnClickListener {
             finish()
         }
         binding.createReminderText.setOnClickListener {
-            if(reminder.reminderId > 0){
-                viewModel.updateReminder(binding.reminderDescription.text.toString())
-            }else{
-                viewModel.insertReminder(binding.reminderDescription.text.toString())
+            //todo bilgiler tarih content saat boş gelmesin
+
+            if (binding.reminderDescription.text.toString() == "") {
+                openInfoDialog(this, "Write your reminder description", "Remind Me")
+                return@setOnClickListener
+            } else if (binding.dateDayText.text.toString() == "") {
+                openInfoDialog(this, "Please specify reminder day", "Remind Me")
+                return@setOnClickListener
+            } else if (binding.dateTimeText.text.toString() == "") {
+                openInfoDialog(this, "Please specify reminder time", "Remind Me")
+                return@setOnClickListener
+            } else {
+                if (reminder.reminderId > 0) {
+                    viewModel.updateReminder(binding.reminderDescription.text.toString())
+                } else {
+                    viewModel.insertReminder(binding.reminderDescription.text.toString())
+                }
             }
-            restart(this)
         }
         binding.dateDayLayout.setOnClickListener {
             openDatePicker()
@@ -91,20 +97,16 @@ class CreateReminderActivity : AppCompatActivity() {
         binding.dateTimeLayout.setOnClickListener {
             openHourDialogDialog()
         }
-        binding.isBirthdaySwitch.setOnClickListener {
+        binding.isBirthdaySwitch.setOnCheckedChangeListener { compoundButton, isChecked ->
             viewModel.isBirthdayClicked()
         }
-
         binding.isActiveLayout.setOnClickListener {
             viewModel.isActiveClicked()
         }
-        viewModel.isBirthDay.observe(this,androidx.lifecycle.Observer {
-            binding.isBirthdaySwitch.isSelected = it
-        })
-        viewModel.isActive.observe(this,androidx.lifecycle.Observer {
-            if(it){
+        viewModel.isActive.observe(this, androidx.lifecycle.Observer {
+            if (it) {
                 binding.isActiveImage.setImageResource(R.drawable.ic_alarm_active)
-            }else{
+            } else {
                 binding.isActiveImage.setImageResource(R.drawable.ic_alarm_passive)
             }
         })
@@ -119,15 +121,16 @@ class CreateReminderActivity : AppCompatActivity() {
         ).show()
     }
 
-    fun openHourDialogDialog(){
-        val dialog = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-            val notifyTime =
-                (if (hourOfDay < 10) "0$hourOfDay" else hourOfDay).toString() + ":" + if (minute < 10) "0$minute" else minute
-            val hourInMilis = hourOfDay*60000*60 + minute*60000 as Long
-            viewModel.setHourText(notifyTime, hourInMilis)
-            Log.i("Hour Milis: ", (hourOfDay*60000*60).toString())
-            Log.i("Minute Milis: ", (minute*60000).toString())
-        }, 12, 30, true
+    fun openHourDialogDialog() {
+        val dialog = TimePickerDialog(
+            this, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                val notifyTime =
+                    (if (hourOfDay < 10) "0$hourOfDay" else hourOfDay).toString() + ":" + if (minute < 10) "0$minute" else minute
+                val hourInMilis = hourOfDay * 60000 * 60 + minute * 60000
+                viewModel.setHourText(notifyTime, hourInMilis)
+                Log.i("Hour Milis: ", (hourOfDay * 60000 * 60).toString())
+                Log.i("Minute Milis: ", (minute * 60000).toString())
+            }, 12, 30, true
         )
         dialog.show()
     }

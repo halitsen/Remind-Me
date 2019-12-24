@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity(),RecyclerViewClickListener {
         binding.reminderList.adapter = adapter
 
         binding.fab.setOnClickListener {
-            viewModel.openCreateReminderAcivity(this,reminder)
+            viewModel.openCreateReminder(this)
         }
 
         viewModel.allReminders.observe(this, Observer {
@@ -78,6 +78,6 @@ class MainActivity : AppCompatActivity(),RecyclerViewClickListener {
     }
 
     override fun onEditItem(item: ReminderData) {
-        viewModel.openCreateReminderAcivity(this,item)
+        viewModel.openEditReminder(this,item)
     }
 }

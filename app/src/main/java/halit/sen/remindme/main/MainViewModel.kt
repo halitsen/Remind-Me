@@ -30,10 +30,14 @@ class MainViewModel (val database: ReminderDao, application: Application) : Andr
         database.update(reminder)
     }
 
-    fun openCreateReminderAcivity(context:Context, reminder: ReminderData){
+    fun openEditReminder(context:Context, reminder: ReminderData){
         val editRemidnerIntent = Intent(context,CreateReminderActivity::class.java)
         editRemidnerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         editRemidnerIntent.putExtra("reminder",reminder)
         context.startActivity(editRemidnerIntent)
+    }
+    fun openCreateReminder(context: Context){
+        val createRemidnerIntent = Intent(context,CreateReminderActivity::class.java)
+        context.startActivity(createRemidnerIntent)
     }
 }

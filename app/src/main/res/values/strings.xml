@@ -3,4 +3,6 @@
     <string name="reminder_placeholder_text">I have homework to do</string>
     <string name="reminder_date">01.02.2020 15:00</string>
     <string name="empty_reminder_placeholder_text">You didn\'t have any reminder yet. \n Use (+) button below to create a reminder.</string>
+    <string name="space"> \u0020</string>
+
 </resources>

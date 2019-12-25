@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import halit.sen.remindme.database.ReminderDao
 import halit.sen.remindme.database.ReminderData
-import halit.sen.remindme.restart
+import halit.sen.remindme.utils.restart
 import kotlinx.coroutines.*
 
 class CreateReminderViewModel(
@@ -20,6 +20,10 @@ class CreateReminderViewModel(
     private val _content = MutableLiveData<String>()
     val content: LiveData<String>
         get() = _content
+
+    private val _title = MutableLiveData<String>()
+    val title: LiveData<String>
+        get() = _title
 
     private val _reminderTimeAsDay = MutableLiveData<String>()
     val reminderTimeAsDay: LiveData<String>
@@ -47,6 +51,7 @@ class CreateReminderViewModel(
 
     init {
         _content.value = reminder.reminderContent
+        _title.value = reminder.reminderTitle
         _reminderTimeAsDay.value = reminder.notifyTimeAsDay.toString()
         _reminderTimeAsHour.value = reminder.notifyTimeAsHour.toString()
         _isBirthday.value = reminder.isBirthday
@@ -54,9 +59,10 @@ class CreateReminderViewModel(
         _notifyTimeMilis.value = reminder.notifyTimeMilis
     }
 
-    fun insertReminder(description: String) {
+    fun insertReminder(description: String, title:String) {
         uiScope.launch {
             reminder.reminderContent = description
+            reminder.reminderTitle = title
             reminder.isActive = _isActive.value!!
             reminder.isBirthday = _isBirthday.value!!
             reminder.notifyTimeAsDay = _reminderTimeAsDay.value.toString()
@@ -69,10 +75,11 @@ class CreateReminderViewModel(
         restart(context)
     }
 
-    fun updateReminder(description: String) {
+    fun updateReminder(description: String, title: String) {
 
         uiScope.launch {
             reminder.reminderContent = description
+            reminder.reminderTitle = title
             reminder.isActive = _isActive.value!!
             reminder.isBirthday = _isBirthday.value!!
             reminder.notifyTimeAsDay = _reminderTimeAsDay.value.toString()

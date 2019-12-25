@@ -61,6 +61,47 @@
                     android:paddingLeft="30dp">
 
                     <EditText
+                        android:id="@+id/reminder_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="1dp"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="12dp"
+                        android:textCursorDrawable="@drawable/cursor_color"
+                        android:hint="Reminder Title : "
+                        android:maxLines="1"
+                        android:text="@{createReminderViewModel.title}"
+                        android:textSize="17sp"
+                        app:fontFamily="sans-serif"
+                        android:textColorHint="@color/hintColor"
+                        android:background="@null"
+                        android:textColor="@color/darkBlue"
+                        android:paddingRight="12dp"
+                        android:paddingLeft="12dp"
+                        android:paddingBottom="12dp">
+                    </EditText>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.25dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@color/darkBlue">
+                </View>
+
+                <RelativeLayout
+                    android:id="@+id/desc_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:paddingRight="30dp"
+                    android:background="@color/white"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingLeft="30dp">
+
+                    <EditText
                         android:id="@+id/reminder_description"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -68,7 +109,7 @@
                         android:gravity="center_vertical"
                         android:layout_marginTop="12dp"
                         android:textCursorDrawable="@drawable/cursor_color"
-                        android:hint="Remind Me: "
+                        android:hint="Remind me to : "
                         android:maxLines="3"
                         android:text="@{createReminderViewModel.content}"
                         android:textSize="17sp"

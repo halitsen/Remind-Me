@@ -1,8 +1,6 @@
 package halit.sen.remindme.main
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import halit.sen.remindme.R
-import halit.sen.remindme.database.ReminderDao
 import halit.sen.remindme.database.ReminderData
-import halit.sen.remindme.database.ReminderDatabase
-import halit.sen.remindme.getTimeFromMilis
 
 class ReminderListAdapter(mainActivity: MainActivity) : RecyclerView.Adapter<ReminderListAdapter.ViewHolder>(){
 

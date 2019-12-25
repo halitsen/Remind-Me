@@ -3,7 +3,6 @@ package halit.sen.remindme.createReminder
 import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import halit.sen.remindme.database.ReminderData
@@ -14,11 +13,7 @@ import java.util.*
 import android.app.TimePickerDialog
 import android.util.Log
 import halit.sen.remindme.R
-import halit.sen.remindme.openInfoDialog
-import halit.sen.remindme.restart
-import kotlinx.android.synthetic.main.activity_create_reminder.view.*
-import kotlin.time.ExperimentalTime
-import kotlin.time.milliseconds
+import halit.sen.remindme.utils.openInfoDialog
 
 
 class CreateReminderActivity : AppCompatActivity() {
@@ -55,38 +50,56 @@ class CreateReminderActivity : AppCompatActivity() {
                     Calendar.DAY_OF_MONTH, dayOfMonth
                 )
                 val df = SimpleDateFormat("EEE, d MMM yyyy", Locale.getDefault())
-               val  cl = Calendar.getInstance()
+                val cl = Calendar.getInstance()
 
                 val hour = cl.get(Calendar.HOUR_OF_DAY)
                 val minute = cl.get(Calendar.MINUTE)
 
-                val mil = (hour*60000*60) + (minute*60000)
-
+                val mil = (hour * 60000 * 60) + (minute * 60000)
 
                 viewModel.setDayText(df.format(cal.time), cal.timeInMillis.minus(mil))
                 Log.i("Milisecond : ", cal.timeInMillis.toString())
             }
-        // edit note dan gelince uı i databinding ile set et. Boş ise boş set edilecek zaten. Add ile edit arasındaki farkı ayır..
         binding.backIcon.setOnClickListener {
             finish()
         }
         binding.createReminderText.setOnClickListener {
-            //todo bilgiler tarih content saat boş gelmesin
+            val title:String
+
+            if(binding.reminderTitle.text.toString() != ""){
+                title = binding.reminderTitle.text.toString()
+            }else{
+                title = getString(R.string.app_name)
+            }
 
             if (binding.reminderDescription.text.toString() == "") {
-                openInfoDialog(this, "Write your reminder description", "Remind Me")
+                openInfoDialog(
+                    this,
+                    "Write your reminder description",
+                    "Remind Me"
+                )
                 return@setOnClickListener
             } else if (binding.dateDayText.text.toString() == "") {
-                openInfoDialog(this, "Please specify reminder day", "Remind Me")
+                openInfoDialog(
+                    this,
+                    "Please specify reminder day",
+                    "Remind Me"
+                )
                 return@setOnClickListener
             } else if (binding.dateTimeText.text.toString() == "") {
-                openInfoDialog(this, "Please specify reminder time", "Remind Me")
+                openInfoDialog(
+                    this,
+                    "Please specify reminder time",
+                    "Remind Me"
+                )
                 return@setOnClickListener
             } else {
                 if (reminder.reminderId > 0) {
-                    viewModel.updateReminder(binding.reminderDescription.text.toString())
+                    viewModel.updateReminder(
+                        binding.reminderDescription.text.toString(),title)
                 } else {
-                    viewModel.insertReminder(binding.reminderDescription.text.toString())
+                    viewModel.insertReminder(
+                        binding.reminderDescription.text.toString(),title)
                 }
             }
         }

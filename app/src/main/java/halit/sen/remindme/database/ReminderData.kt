@@ -13,7 +13,7 @@ class ReminderData : Serializable{
     var reminderId: Long = 0L
 
     @ColumnInfo(name = "title")
-    var reminderTitle:String = "Remind Me"
+    var reminderTitle:String = ""
 
     @ColumnInfo(name = "content")
     var reminderContent:String = ""

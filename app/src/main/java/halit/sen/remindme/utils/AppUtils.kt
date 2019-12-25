@@ -1,4 +1,4 @@
-package halit.sen.remindme
+package halit.sen.remindme.utils
 
 import android.content.Context
 import android.content.Intent

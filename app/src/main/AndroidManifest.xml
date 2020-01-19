@@ -22,7 +22,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".receiver.AlarmReceiver"></receiver>
+        <receiver android:name=".receiver.AlarmReceiver">
+        </receiver>
+
+        <service android:name=".receiver.FCMService"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="com.google.firease.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.default_notification_icon"
+            android:resource="@drawable/common_google_signin_btn_icon_dark"/>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/darkBlue"/>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/fcmChannelId"/>
 
     </application>
 

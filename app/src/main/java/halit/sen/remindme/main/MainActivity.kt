@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity(),RecyclerViewClickListener {
         val dataSource = ReminderDatabase.getInstance(application).reminderDao
         val viewModelFactory = MainViewModelFactory(dataSource, application)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
         binding.reminderList.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         setSupportActionBar(binding.toolbar)
@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity(),RecyclerViewClickListener {
                 if(it.size>0){
                     for(i in 0 until it.size){
                         if(it.get(i).notifyTimeMilis > System.currentTimeMillis()){
-                            intent.putExtra("text", it.get(i).reminderContent); //data to pass
+                            intent.putExtra("text", it.get(i).reminderContent) //data to pass
                             val pendingIntent = PendingIntent.getBroadcast(this,i,intent,PendingIntent.FLAG_CANCEL_CURRENT)
                             alarmManager.setExact(AlarmManager.RTC_WAKEUP,it.get(i).notifyTimeMilis ,pendingIntent)
                             Log.i("alarmMilisaniye :", it.get(0).notifyTimeMilis.toString())
@@ -79,6 +79,7 @@ class MainActivity : AppCompatActivity(),RecyclerViewClickListener {
             }
         })
         createChanel(getString(R.string.chanelID), getString(R.string.chanelName))
+        createChanel(getString(R.string.fcmChannelId), getString(R.string.fcmChannelName))
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

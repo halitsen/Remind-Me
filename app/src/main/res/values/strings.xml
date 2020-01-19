@@ -11,6 +11,9 @@
     <string name="chanelID">reminder_chanel_id</string>
     <string name="chanelName">reminder_chanel_name</string>
     <string name="notificationContentTitle">Reminder Content Title</string>
+    <string name="fcmChannelId">fcm_channel_id</string>
+    <string name="fcmChannelName">fcm_channel</string>
+l
 
 
 

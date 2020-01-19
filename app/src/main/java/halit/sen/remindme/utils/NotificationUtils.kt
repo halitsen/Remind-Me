@@ -13,7 +13,7 @@ import halit.sen.remindme.main.MainActivity
 private val NOTIFICATION_ID = 0
 private val REQUEST_CODE = 0
 
-fun NotificationManager.sendNotification(messageBody: String, applicationContext: Context) {
+fun NotificationManager.sendNotification(messageBody: String, messageTitle:String, applicationContext: Context) {
 
     val contentIntent = Intent(applicationContext, MainActivity::class.java)
     val contentPendingIntent = PendingIntent.getActivity(
@@ -38,7 +38,7 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         applicationContext.getString(R.string.chanelID)
     )
         .setSmallIcon(R.drawable.ic_alarm_active)
-        .setContentTitle(applicationContext.getString(R.string.notificationContentTitle))
+        .setContentTitle(messageTitle)
         .setContentText(messageBody)
         .setContentIntent(contentPendingIntent)
         .setAutoCancel(true)

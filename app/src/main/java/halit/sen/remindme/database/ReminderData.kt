@@ -34,6 +34,6 @@ class ReminderData : Serializable{
     var notifyTimeMilis:Long = 0
 
     @ColumnInfo(name = "is_active")
-    var isActive: Boolean = false
+    var isActive: Boolean = true
 
 }

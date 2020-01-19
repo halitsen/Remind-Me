@@ -65,8 +65,9 @@ class MainActivity : AppCompatActivity(),RecyclerViewClickListener {
                 val intent = Intent(this, AlarmReceiver::class.java)
                 if(it.size>0){
                     for(i in 0 until it.size){
-                        if(it.get(i).notifyTimeMilis > System.currentTimeMillis()){
+                        if(it.get(i).notifyTimeMilis > System.currentTimeMillis() && it.get(i).isActive){
                             intent.putExtra("text", it.get(i).reminderContent) //data to pass
+                            intent.putExtra("title",it.get(i).reminderTitle)
                             val pendingIntent = PendingIntent.getBroadcast(this,i,intent,PendingIntent.FLAG_CANCEL_CURRENT)
                             alarmManager.setExact(AlarmManager.RTC_WAKEUP,it.get(i).notifyTimeMilis ,pendingIntent)
                             Log.i("alarmMilisaniye :", it.get(0).notifyTimeMilis.toString())
@@ -117,7 +118,7 @@ class MainActivity : AppCompatActivity(),RecyclerViewClickListener {
             notificationChannel.enableVibration(true)
             notificationChannel.description = "Reminder Time"
             val notificationManager = getSystemService(NotificationManager::class.java)
-            notificationManager.createNotificationChannel(notificationChannel)
+            notificationManager!!.createNotificationChannel(notificationChannel)
 
         }
     }

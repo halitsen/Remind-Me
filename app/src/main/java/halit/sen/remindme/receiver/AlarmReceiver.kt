@@ -12,9 +12,10 @@ class AlarmReceiver :BroadcastReceiver(){
     override fun onReceive(context: Context, intent: Intent?) {
 
         val text = intent!!.getStringExtra("text")
+        val title = intent.getStringExtra("title")
 
         val notificationManager = ContextCompat.getSystemService(context, NotificationManager::class.java) as NotificationManager
 
-        notificationManager.sendNotification(text!!, context)
+        notificationManager.sendNotification(text!!,title!!, context)
     }
 }

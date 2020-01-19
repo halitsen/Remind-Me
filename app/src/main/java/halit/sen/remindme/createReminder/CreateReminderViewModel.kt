@@ -1,6 +1,7 @@
 package halit.sen.remindme.createReminder
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -48,12 +49,11 @@ class CreateReminderViewModel(
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-
     init {
         _content.value = reminder.reminderContent
         _title.value = reminder.reminderTitle
-        _reminderTimeAsDay.value = reminder.notifyTimeAsDay.toString()
-        _reminderTimeAsHour.value = reminder.notifyTimeAsHour.toString()
+        _reminderTimeAsDay.value = reminder.notifyTimeAsDay
+        _reminderTimeAsHour.value = reminder.notifyTimeAsHour
         _isBirthday.value = reminder.isBirthday
         _isActive.value = reminder.isActive
         _notifyTimeMilis.value = reminder.notifyTimeMilis
@@ -68,6 +68,7 @@ class CreateReminderViewModel(
             reminder.notifyTimeAsDay = _reminderTimeAsDay.value.toString()
             reminder.notifyTimeAsHour = _reminderTimeAsHour.value.toString()
             reminder.notifyTimeMilis = _notifyTimeMilis.value!!
+            Log.i("reminderTimeMS", reminder.notifyTimeMilis.toString())
             withContext(Dispatchers.IO) {
                 database.insert(reminder)
             }

@@ -31,7 +31,12 @@ class CreateReminderActivity : AppCompatActivity() {
         if (bundle != null) {
             reminder = bundle.getSerializable("reminder") as ReminderData
             binding.createReminderText.text = "Update Reminder"
+            // todo nereden gelirse gelsin buradaki gün ve saati sıfırla.
+            // todo milisaniye alındığı için tarih güncellemesi yapınca üstüne ekliyor sürekli.
         }
+        reminder.notifyTimeMilis = 0
+        reminder.notifyTimeAsHour = ""
+        reminder.notifyTimeAsDay = ""
         binding.isBirthdaySwitch.isChecked = reminder.isBirthday
         val application = requireNotNull(this).application
         val datasource = ReminderDatabase.getInstance(application).reminderDao
@@ -50,14 +55,18 @@ class CreateReminderActivity : AppCompatActivity() {
                     Calendar.DAY_OF_MONTH, dayOfMonth
                 )
                 val df = SimpleDateFormat("EEE, d MMM yyyy", Locale.getDefault())
-                val cl = Calendar.getInstance()
 
-                val hour = cl.get(Calendar.HOUR_OF_DAY)
-                val minute = cl.get(Calendar.MINUTE)
+                cal.set(Calendar.HOUR_OF_DAY,0)
+                cal.set(Calendar.MINUTE,0)
+                cal.set(Calendar.SECOND,0)
+                cal.set(Calendar.MILLISECOND,0)
 
-                val mil = (hour * 60000 * 60) + (minute * 60000)
+             //   val hour = cl.get(Calendar.HOUR_OF_DAY)
+             //   val minute = cl.get(Calendar.MINUTE)
 
-                viewModel.setDayText(df.format(cal.time), cal.timeInMillis.minus(mil))
+              //  val mil = (hour * 60000 * 60) + (minute * 60000)
+
+                viewModel.setDayText(df.format(cal.time), cal.timeInMillis)
                 Log.i("Milisecond : ", cal.timeInMillis.toString())
             }
         binding.backIcon.setOnClickListener {
@@ -140,6 +149,16 @@ class CreateReminderActivity : AppCompatActivity() {
                 val notifyTime =
                     (if (hourOfDay < 10) "0$hourOfDay" else hourOfDay).toString() + ":" + if (minute < 10) "0$minute" else minute
                 val hourInMilis = hourOfDay * 60000 * 60 + minute * 60000
+
+                var cal = Calendar.getInstance()
+
+                cal.set(Calendar.YEAR,0)
+                cal.set(Calendar.MONTH,0)
+                cal.set(Calendar.DAY_OF_MONTH,0)
+                cal.set(Calendar.HOUR_OF_DAY,hourOfDay)
+                cal.set(Calendar.MINUTE,minute)
+                cal.set(Calendar.SECOND,0)
+
                 viewModel.setHourText(notifyTime, hourInMilis)
                 Log.i("Hour Milis: ", (hourOfDay * 60000 * 60).toString())
                 Log.i("Minute Milis: ", (minute * 60000).toString())

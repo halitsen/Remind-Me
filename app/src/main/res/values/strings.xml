@@ -8,4 +8,10 @@
     <string name="text_plain">text/plain</string>
     <string name="share">Share..</string>
 
+    <string name="chanelID">reminder_chanel_id</string>
+    <string name="chanelName">reminder_chanel_name</string>
+    <string name="notificationContentTitle">Reminder Content Title</string>
+
+
+
 </resources>

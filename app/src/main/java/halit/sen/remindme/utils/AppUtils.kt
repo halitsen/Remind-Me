@@ -18,7 +18,7 @@ fun getTimeFromMilis(milis: Long): String {
 fun restart(context: Context) {
 
     val intent = Intent(context, MainActivity::class.java)
-    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     context.startActivity(intent)
 }
 

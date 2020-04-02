@@ -13,10 +13,11 @@ import kotlinx.coroutines.*
 class CreateReminderViewModel(
     val reminder: ReminderData,
     val database: ReminderDao,
-    application: Application
+    application: Application, createReminderActivity: CreateReminderActivity
 ) : AndroidViewModel(application) {
 
     private val context = getApplication<Application>().applicationContext
+    private lateinit var activity: CreateReminderActivity
 
     private val _content = MutableLiveData<String>()
     val content: LiveData<String>
@@ -57,6 +58,7 @@ class CreateReminderViewModel(
         _isBirthday.value = reminder.isBirthday
         _isActive.value = reminder.isActive
         _notifyTimeMilis.value = reminder.notifyTimeMilis
+        activity = createReminderActivity
     }
 
     fun insertReminder(description: String, title:String) {

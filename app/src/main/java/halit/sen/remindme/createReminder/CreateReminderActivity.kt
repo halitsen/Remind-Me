@@ -40,7 +40,7 @@ class CreateReminderActivity : AppCompatActivity() {
         binding.isBirthdaySwitch.isChecked = reminder.isBirthday
         val application = requireNotNull(this).application
         val datasource = ReminderDatabase.getInstance(application).reminderDao
-        val viewModelFactory = CreateReminderViewModelFactory(reminder, datasource, application)
+        val viewModelFactory = CreateReminderViewModelFactory(reminder, datasource, application, this)
         viewModel =
             ViewModelProviders.of(this, viewModelFactory).get(CreateReminderViewModel::class.java)
         binding.setLifecycleOwner(this)

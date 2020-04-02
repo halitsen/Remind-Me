@@ -58,6 +58,9 @@ class MainViewModel (val database: ReminderDao, application: Application) : Andr
             context.getString(R.string.share_app_url)
         )
         intent.type = (context.getString(R.string.text_plain))
-        context.startActivity(Intent.createChooser(intent,context.getString(R.string.share)))
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        val choseIntent = Intent.createChooser(intent,context.getString(R.string.share))
+        choseIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivity(choseIntent)
     }
 }
